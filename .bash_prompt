@@ -1,18 +1,35 @@
-# Color the hostname
-if [ $HOSTNAME = 'claudius' ]; then
-    export HOST_COLOR="\[\033[1;36m\]"
-fi
-if [ $HOSTNAME = 'drooble' ]; then
-    export HOST_COLOR="\[\033[1;34m\]"
-fi
-if [ $HOSTNAME = 'davinci' ]; then
-    export HOST_COLOR="\[\033[1;31m\]"
-fi
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+    export TERM='gnome-256color';
+elif infocmp xterm-256color >/dev/null 2>&1; then
+    export TERM='xterm-256color';
+fi;
 
-# Color the colon red if root
-COLON_COLOR='0m'
-if [ ${UID} -eq 0 ]; then
-    COLON_COLOR='1;31m'
-fi
+bold='';
+reset="\e[0m";
+black="\e[1;30m";
+blue="\e[1;34m";
+cyan="\e[1;36m";
+green="\e[1;32m";
+orange="\e[1;33m";
+purple="\e[1;35m";
+red="\e[1;31m";
+violet="\e[1;35m";
+white="\e[1;37m";
+yellow="\e[1;33m";
 
-PS1=`echo -ne "$HOST_COLOR\h\[\033[00m\]\[\e[$COLON_COLOR\]:\[\033[01;32m\]\w\[\033[00m\]\\[\033[01;33m\]\$\[\033[00m\] "`
+
+
+# Set the terminal title to the current working directory.
+PS1="\[\033]0;\w\007\]";
+PS1+="\[${bold}\]\n"; # newline
+PS1+="\[${red}\]\u"; # username
+PS1+="\[${white}\] at ";
+PS1+="\[${red}\]\h"; # host
+PS1+="\[${white}\] in ";
+PS1+="\[${green}\]\w"; # working directory
+PS1+="\n";
+PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
+export PS1;
+
+PS2="\[${yellow}\]→ \[${reset}\]";
+export PS2;
