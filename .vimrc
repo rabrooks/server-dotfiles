@@ -1,7 +1,10 @@
-"execute pathogen#infect()
+execute pathogen#infect()
 
 " Make Vim more useful
 set nocompatible
+
+"Not sure what this does
+filetype plugin indent on
 
 " Enhance command-line completion
 set wildmenu
@@ -59,7 +62,7 @@ set cursorline
 set tabstop=2
 
 " Show “invisible” characters
-set list
+"set list
 
 " Highlight searches
 set hlsearch
