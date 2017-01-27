@@ -1,0 +1,65 @@
+[user]
+	name = Aaron Brooks
+	email = aaronbrooks322@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = auto
+[web]
+	browser = google-chrome
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+[alias]
+  	# Diff Commands
+	d = diff
+	dc = diff --cached
+	dl = difftool
+	dlc = difftool --cached
+	dk = diff --check
+	dp = diff --patience
+	dck = diff --cached --check
+	
+	# diff status: A git diff, but with only the filenames (which reminds me of git status)
+	diffst = diff --name-only
+
+	
+	# Log commands
+	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	lg = log --oneline --graph --decorate
+	lga = log --graph --all --pretty=format:'%C(bold)%h%Creset -%C(auto)%d%Creset %s %C(green dim)(%cr)%Creset %C(ul)<%an>'
+	
+ 	# list branches sorted by last modified
+  lb = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+  # list aliases
+  la = "!git config -l | grep alias | cut -c 7-"
+
+	# Prune
+	pr = prune -v
+
+	#Status
+	sb = status -s -b
+
+	undo-commit = reset --soft HEAD~1
+	
+	# Misc
+	assume = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+	whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+	barebranch = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && git rm --cached -r . && git clean -xfd' -
+	flat = clone --depth 1
+	subpull = !git submodule foreach git pull --tags origin master
+	subrepo = !sh -c 'filter-branch --prune-empty --subdirectory-filter $1 master' -
+	human = name-rev --name-only --refs=refs/heads/*
